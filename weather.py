@@ -20,7 +20,6 @@ def get_coordinates(city_name, country_code):
     else:
         return None, None    
 
-latitude, longitude = get_coordinates("Bomet","KE")
 
 def get_weather(latitude,longitude,api_key):
     response = requests.post(f"{BASE_URL}",params={'lat':latitude,'lon':longitude,'appid':api_key,'units':'metric'})
@@ -63,10 +62,13 @@ def get_weather(latitude,longitude,api_key):
            'sunset': formatted_sunset,
             'date': formatted_date,
         }
-        print(data)
         return data
     else:
         return None
-latitude, longitude = get_coordinates("Bomet","KE")
-get_weather(latitude,longitude,api_key)
-
+    
+def get_requested_weather(city, country):
+    latitude, longitude = get_coordinates(city, country)
+    if latitude and longitude:
+        return get_weather(latitude, longitude, api_key)
+    else:
+        return None
